@@ -22,6 +22,7 @@ namespace AI.Role
             Transform target = Move.GetNearRole();
             if (target)
             {
+                Move.AddAction(0, () => Move.RotateToTarget(target));
                 AddAction(0, () => Attack(target));
             }
         }

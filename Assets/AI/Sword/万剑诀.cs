@@ -8,17 +8,20 @@ namespace AI.Sword
         public int count;
         // 范围
         public float rangeSize;
+        // 高度
+        public float high;
 
         public override float GetColdTime()
         {
-            return 10;
+            return 6;
         }
 
         protected override void BeforPlan()
         {
-            count = 50;
+            count = 200;
             rangeSize = 5;
-            Speed = 20;
+            Speed = 30;
+            high = 30;
             SetKinematic(true);
         }
 
@@ -26,7 +29,7 @@ namespace AI.Sword
         {
             // 竖直起飞
             LookAttack(transform.position - Vector3.up);
-            AddAction(2, () => Move(-transform.forward));
+            AddAction(high/Speed, () => Move(-transform.forward));
             AddAction(0, () =>
             {
                 // 瞬移到头上
@@ -46,7 +49,7 @@ namespace AI.Sword
                         sword.transform.position += range;
                         // 随机等待一段时间后发射
                         sword.AddAction(Random.Range(0, 2f), () => { });
-                        sword.AddAction(3, () => sword.Move(sword.transform.forward, Speed * 3));
+                        sword.AddAction(high/Speed, () => sword.Move(sword.transform.forward, Speed * 2));
                     });
                 }
                 Destroy(gameObject);

@@ -13,7 +13,7 @@ namespace AI.Sword
         private float distance;
         public override float GetColdTime()
         {
-            return 5;
+            return 3;
         }
 
         protected override void BeforPlan()

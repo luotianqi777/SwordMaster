@@ -11,7 +11,7 @@ namespace AI.Sword
 
         public override float GetColdTime()
         {
-            return 10;
+            return 5;
         }
 
         protected override void BeforPlan()
