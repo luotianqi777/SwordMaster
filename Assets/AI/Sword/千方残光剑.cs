@@ -61,7 +61,8 @@ namespace AI.Sword
             Vector3 fix = sword.transform.position;
             fix.y = center.y;
             sword.transform.position = fix;
-            sword.LookAttack(AttackTarget);
+            float temp = Vector3.Distance(center, sword.transform.position) / high;
+            sword.LookAttack(center * temp + AttackTarget * (1 - temp));
             // 修正角度
             sword.transform.Rotate(Vector3.right, sword.transform.rotation.x / 2, Space.Self);
             sword.Rotate(AttackTarget, Vector3.up);

@@ -70,6 +70,7 @@
     <Compile Include="Assets\AI\Role\李逍遥.cs" />
     <Compile Include="Assets\AI\Sword\SwordAI.cs" />
     <Compile Include="Assets\AI\Sword\万剑诀.cs" />
+    <Compile Include="Assets\AI\Sword\上清破云剑.cs" />
     <Compile Include="Assets\AI\Sword\千方残光剑.cs" />
     <Compile Include="Assets\AI\Sword\御剑术.cs" />
     <Compile Include="Assets\AI\Sword\逍遥神剑.cs" />
