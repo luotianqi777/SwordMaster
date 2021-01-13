@@ -10,7 +10,7 @@ namespace AI.Sword
         protected override void BeforPlan()
         {
             count = 1000;
-            high = 20;
+            high = 30;
             waitTime = 10;
             Speed = 20;
             RotateSpeed = 360;
@@ -20,10 +20,10 @@ namespace AI.Sword
         protected override void Plan()
         {
             Vector3 vector = AttackTarget - transform.position + Vector3.up * high ;
-            float time = (vector.magnitude - high/2) / Speed;
+            float time = (vector.magnitude - high) / Speed;
+            AddAction(high / Speed, () => Move(Vector3.up));
             AddAction(time, () =>
             {
-                Rotate(Vector3.up);
                 Move(vector);
             });
             AddAction(waitTime, () => { 
@@ -56,11 +56,11 @@ namespace AI.Sword
 
         private void SubAttack(SwordAI sword)
         {
-            Vector3 vector = AttackTarget + Vector3.up * high;
-            sword.Move(transform.position - AttackTarget);
+            Vector3 center = AttackTarget + Vector3.up * high;
+            sword.Move(center - sword.transform.position, high/Speed);
             // 修正水平位置
             Vector3 fix = sword.transform.position;
-            fix.y = vector.y;
+            fix.y = center.y;
             sword.transform.position = fix;
             sword.LookAttack(AttackTarget);
             // 修正角度
