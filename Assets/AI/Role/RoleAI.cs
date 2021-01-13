@@ -28,7 +28,7 @@ namespace AI.Role
                 if (target == null) { target = role.transform; continue; }
                 nowDistance = Vector3.Distance(transform.position, target.transform.position);
                 newDistance = Vector3.Distance(transform.position, role.transform.position);
-                if (nowDistance < newDistance) { target = role.transform; }
+                if (nowDistance > newDistance) { target = role.transform; }
             }
             return target;
         }
