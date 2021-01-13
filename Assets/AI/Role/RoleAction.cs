@@ -7,6 +7,8 @@ namespace AI.Role
     {
         // 速度(m/s)
         public float Speed = 2;
+        // 转动速度
+        public float RotateSpeed { get => Speed * 45; }
         // 剑预制体
         public Transform SwordPrefab;
         private Animator _ani;
@@ -124,13 +126,31 @@ namespace AI.Role
         public void RotateLeft()
         {
             PlayAnimation();
-            transform.Rotate(Vector3.up, -Time.deltaTime * 90, Space.Self);
+            transform.Rotate(Vector3.up, -Time.deltaTime * RotateSpeed, Space.Self);
         }
 
         public void RotateRight()
         {
             PlayAnimation();
-            transform.Rotate(Vector3.up, Time.deltaTime * 90, Space.Self);
+            transform.Rotate(Vector3.up, Time.deltaTime * RotateSpeed , Space.Self);
+        }
+
+        /// <summary>
+        /// 转动到目标
+        /// </summary>
+        /// <param name="target">目标位置</param>
+        public void RotateToTarget(Transform target)
+        {
+            Vector3 dis = target.position - transform.position;
+            float time = Vector3.Angle(transform.forward, dis)/RotateSpeed;
+            if (Vector3.Cross(transform.forward,dis).y>0)
+            {
+                AddAction(time, RotateRight);
+            }
+            else
+            {
+                AddAction(time, RotateLeft);
+            }
         }
 
     }

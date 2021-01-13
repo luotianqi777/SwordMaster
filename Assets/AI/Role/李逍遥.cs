@@ -9,24 +9,11 @@ namespace AI.Role
         {
         }
 
-        private void RotateToTarget(Transform target)
-        {
-            if (Vector3.Cross(transform.forward, target.position-transform.position).y>0)
-            {
-                RotateRight();
-            }
-            else
-            {
-                RotateLeft();
-            }
-        }
-
         protected override void Plan()
         {
             Transform target = GetNearRole();
             if (target)
             {
-                AddAction(0.5f, () => RotateToTarget(target));
                 float distance = Vector3.Distance(target.position, transform.position);
                 if (distance > Speed * 10)
                 {
@@ -39,6 +26,7 @@ namespace AI.Role
                 else
                 {
                     AddAction(0.2f, Idle);
+                    RotateToTarget(target);
                     Attack(target);
                 }
             }
