@@ -9,7 +9,9 @@ namespace AI.Sword
         // 冷却时间
         public readonly float coldTime = 3;
         // 攻击目标
-        protected Vector3 target;
+        protected Transform target;
+        // 攻击目标位置
+        protected Vector3 AttackTarget { get=> target? target.position + Vector3.up:transform.forward * 5 + transform.position; }
         // 速度(m/s)
         public float Speed = 10;
         // 转动速度(°/s)
@@ -25,7 +27,7 @@ namespace AI.Sword
         /// 设置攻击目标
         /// </summary>
         /// <param name="target">目标坐标</param>
-        public void SetTarget(Vector3 target)
+        public void SetTarget(Transform target)
         {
             this.target = target;
         }

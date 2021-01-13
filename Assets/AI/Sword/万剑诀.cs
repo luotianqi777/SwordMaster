@@ -25,7 +25,7 @@ namespace AI.Sword
             AddAction(0, () =>
             {
                 // 瞬移到头上
-                Vector3 targetPosition = target;
+                Vector3 targetPosition = AttackTarget;
                 targetPosition.y = transform.position.y;
                 transform.position = targetPosition;
             });

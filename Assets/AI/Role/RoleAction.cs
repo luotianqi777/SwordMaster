@@ -33,18 +33,18 @@ namespace AI.Role
         /// </summary>
         /// <param name="self">自身的GameObject</param>
         /// <returns>目标的GameObject</returns>
-        protected GameObject GetNearRole()
+        protected Transform GetNearRole()
         {
-            GameObject target = null;
+            Transform target = null;
             float nowDistance;
             float newDistance;
             foreach (GameObject role in GameObject.FindGameObjectsWithTag("Role"))
             {
                 if (role == gameObject) { continue; }
-                if (target == null) { target = role; continue; }
+                if (target == null) { target = role.transform; continue; }
                 nowDistance = Vector3.Distance(transform.position, target.transform.position);
                 newDistance = Vector3.Distance(transform.position, role.transform.position);
-                if (nowDistance < newDistance) { target = role; }
+                if (nowDistance < newDistance) { target = role.transform; }
             }
             return target;
         }
@@ -52,12 +52,12 @@ namespace AI.Role
         /// <summary>
         /// 获取距离自身最近的目标的最佳攻击Position
         /// </summary>
-        /// <param name="role">目标GameObject</param>
+        /// <param name="role">目标</param>
         /// <returns>目标的位置</returns>
-        protected Vector3 GetRoleAttackPostion(GameObject role = null)
+        protected Vector3 GetRoleAttackPostion(Transform role = null)
         {
             role = role ? role : GetNearRole();
-            if (role) { return role.transform.position + Vector3.up; }
+            if (role) { return role.position + Vector3.up; }
             else { return transform.position + Vector3.up + transform.forward * 10; }
         }
 
@@ -79,7 +79,7 @@ namespace AI.Role
         /// <typeparam name="T">行为</typeparam>
         /// <typeparam name="target">目标</typeparam>
         /// <returns>剑的位置</returns>
-        protected Transform GetSword<T>(Vector3 target) where T : Sword.SwordAction
+        protected Transform GetSword<T>(Transform target) where T : Sword.SwordAction
         {
             Transform sword = GetSword();
             sword.gameObject.AddComponent<T>();

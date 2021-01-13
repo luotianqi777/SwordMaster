@@ -9,13 +9,25 @@ namespace AI.Role
         {
         }
 
+        private void RotateToTarget(Transform target)
+        {
+            if (Vector3.Cross(transform.forward, target.position-transform.position).y>0)
+            {
+                RotateRight();
+            }
+            else
+            {
+                RotateLeft();
+            }
+        }
+
         protected override void Plan()
         {
-            GameObject targer = GetNearRole();
-            if (targer)
+            Transform target = GetNearRole();
+            if (target)
             {
-                transform.LookAt(targer.transform);
-                float distance = Vector3.Distance(targer.transform.position, transform.position);
+                AddAction(0.5f, () => RotateToTarget(target));
+                float distance = Vector3.Distance(target.position, transform.position);
                 if (distance > Speed * 10)
                 {
                     AddAction(0.5f, MoveForword);
@@ -27,7 +39,7 @@ namespace AI.Role
                 else
                 {
                     AddAction(0.2f, Idle);
-                    Attack(GetRoleAttackPostion(targer));
+                    Attack(target);
                 }
             }
             else
@@ -36,7 +48,7 @@ namespace AI.Role
             }
         }
 
-        public void Attack(Vector3 target)
+        public void Attack(Transform target)
         {
             switch (Random.Range(0, 3))
             {

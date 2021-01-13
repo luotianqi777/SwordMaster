@@ -20,9 +20,9 @@ namespace AI.Sword
 
         protected override void Plan()
         {
-            Vector3 vector = target - transform.position;
+            Vector3 vector = AttackTarget - transform.position;
             float time = vector.magnitude / Speed;
-            AddAction(0, () => LookAttack(target));
+            AddAction(0, () => LookAttack(AttackTarget));
             // 渐进放大
             AddAction(0.5f, () => AddScale(Vector3.one * 2));
             // 前进
@@ -67,7 +67,7 @@ namespace AI.Sword
             // 瞄准
             sword.AddAction(0, () =>
             {
-                sword.LookAttack(target);
+                sword.LookAttack(AttackTarget);
                 sword.SetKinematic(false);
             });
             // 前进

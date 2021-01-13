@@ -14,7 +14,7 @@ namespace AI.Sword
 
         protected override void Plan()
         {
-            Vector3 vector = target + Vector3.up * 3 - transform.position;
+            Vector3 vector = AttackTarget + Vector3.up * 3 - transform.position;
             float time = vector.magnitude / Speed;
             AddAction(time, () =>
             {
@@ -24,7 +24,7 @@ namespace AI.Sword
             });
             AddAction(0, () => {
                 SetKinematic(false);
-                LookAttack(target);
+                LookAttack(AttackTarget);
                 });
             AddAction(1, () => Move(transform.forward));
         }
@@ -34,12 +34,12 @@ namespace AI.Sword
             sword.AddAction(2, () =>
             {
                 sword.Rotate(Vector3.up);
-                sword.Rotate(target, Vector3.up);
+                sword.Rotate(AttackTarget, Vector3.up);
             });
             sword.AddAction(0, () =>
             {
                 sword.SetKinematic(false);
-                sword.LookAttack(target);
+                sword.LookAttack(AttackTarget);
             });
             sword.AddAction(Random.Range(0, 1f), () => { });
             sword.AddAction(3, () => sword.Move(sword.transform.forward));
