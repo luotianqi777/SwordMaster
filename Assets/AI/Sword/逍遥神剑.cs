@@ -9,13 +9,17 @@ namespace AI.Sword
         // 角度范围
         public float range;
 
+        public override float GetColdTime()
+        {
+            return 10;
+        }
+
         protected override void BeforPlan()
         {
             count = 10;
             range = 100;
             RotateSpeed = 360 * 10;
             Speed = 20;
-            ColdTime = 3;
             SetKinematic(true);
         }
 

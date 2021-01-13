@@ -1,5 +1,8 @@
 ﻿using AI.AIManager;
+using AI.Sword;
 using UnityEngine;
+using System;
+using System.Collections.Generic;
 
 namespace AI.Role
 {
@@ -8,10 +11,50 @@ namespace AI.Role
     {
         // 剑预制体
         public Transform SwordPrefab;
+        // 操作列表
         protected MoveAI Move;
-        protected override void BeforPlan() { Move = GetComponent<MoveAI>(); }
+        // 可用的剑操作列表
+        private List<Action<Transform>> swordList = new List<Action<Transform>>();
+        protected override void BeforPlan() { Move = GetComponent<MoveAI>(); AddSwords(); }
         protected override void AfterPlan() { AddAction(0, () => { Plan(); AfterPlan(); }); }
-
+        protected override void Plan()
+        {
+            Transform target = GetNearRole();
+            if (target)
+            {
+                Move.RotateToTarget(target);
+                Attack(target);
+                float distance = Vector3.Distance(target.position, transform.position);
+                if (distance > Move.Speed * 10)
+                {
+                    Move.AddAction(0.5f, Move.MoveForword);
+                }
+                else if (distance < Move.Speed * 5)
+                {
+                    Move.AddAction(0.5f, Move.MoveBack);
+                }
+                else
+                {
+                    Move.AddAction(0.2f, Move.Idle);
+                }
+            }
+            else
+            {
+                Move.MoveRandom();
+            }
+        }
+        // 添加技能组
+        protected abstract void AddSwords();
+        // 添加可用的剑
+        protected void AddSword<T>()where T:SwordAI
+        {
+            swordList.Add(GetSword<T>);
+        }
+        // 攻击目标
+        private void Attack(Transform target)
+        {
+            swordList[UnityEngine.Random.Range(0, swordList.Count)].Invoke(target);
+        }
         /// <summary>
         /// 获取距离自身最近的目标
         /// </summary>
@@ -49,7 +92,7 @@ namespace AI.Role
         /// 创建一把没有行为的剑，位于角色正前方
         /// </summary>
         /// <returns>剑的位置</returns>
-        protected Transform GetSword()
+        private Transform GetSword()
         {
             Transform sword = Instantiate(SwordPrefab);
             sword.position = transform.position + transform.forward + transform.up;
@@ -62,15 +105,13 @@ namespace AI.Role
         /// </summary>
         /// <typeparam name="T">行为</typeparam>
         /// <typeparam name="target">目标</typeparam>
-        /// <returns>剑的位置</returns>
-        protected Transform GetSword<T>(Transform target) where T : Sword.SwordAI
+        private void GetSword<T>(Transform target) where T : SwordAI
         {
             Transform sword = GetSword();
             sword.gameObject.AddComponent<T>();
             T action = sword.GetComponent<T>();
             action.SetTarget(target);
-            AddAction(action.ColdTime, () => { });
-            return sword;
+            AddAction(action.GetColdTime(), () => { });
         }
     }
 }

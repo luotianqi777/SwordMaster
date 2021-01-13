@@ -9,9 +9,13 @@ namespace AI.Sword
         // 范围
         public float rangeSize;
 
+        public override float GetColdTime()
+        {
+            return 10;
+        }
+
         protected override void BeforPlan()
         {
-            ColdTime = 2;
             count = 50;
             rangeSize = 5;
             Speed = 20;

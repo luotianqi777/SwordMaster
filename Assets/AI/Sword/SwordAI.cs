@@ -6,8 +6,6 @@ namespace AI.Sword
 {
     public abstract class SwordAI : BaseAIManager
     {
-        // 冷却时间
-        public float ColdTime = 3;
         // 攻击目标
         protected Transform target;
         // 攻击目标位置
@@ -22,7 +20,8 @@ namespace AI.Sword
         public Vector3 HeadLocation { get => transform.position - transform.forward * 0.75f; }
         // 剑尾坐标
         public Vector3 TailLocation { get => transform.position + transform.forward * 0.75f; }
-
+        // 冷却时间
+        public abstract float GetColdTime();
         /// <summary>
         /// 设置攻击目标
         /// </summary>
