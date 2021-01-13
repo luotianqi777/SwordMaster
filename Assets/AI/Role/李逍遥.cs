@@ -5,34 +5,30 @@ namespace AI.Role
     class 李逍遥 : RoleAI
     {
 
-        protected override void BeforPlan()
-        {
-        }
-
         protected override void Plan()
         {
             Transform target = GetNearRole();
             if (target)
             {
+                Attack(target);
                 float distance = Vector3.Distance(target.position, transform.position);
-                if (distance > Speed * 10)
+                if (distance > Move.Speed * 10)
                 {
-                    AddAction(0.5f, MoveForword);
+                    Move.AddAction(0.5f, Move.MoveForword);
                 }
-                else if (distance < Speed * 5)
+                else if (distance < Move.Speed * 5)
                 {
-                    AddAction(0.5f, MoveBack);
+                    Move.AddAction(0.5f, Move.MoveBack);
                 }
                 else
                 {
-                    AddAction(0.2f, Idle);
-                    RotateToTarget(target);
-                    Attack(target);
+                    Move.AddAction(0.2f, Move.Idle);
                 }
+                Move.RotateToTarget(target);
             }
             else
             {
-                MoveRandom();
+                Move.MoveRandom();
             }
         }
 

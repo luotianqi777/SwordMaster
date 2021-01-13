@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\AI\AIManager\BaseAIManager.cs" />
+    <Compile Include="Assets\AI\Role\MoveAI.cs" />
     <Compile Include="Assets\AI\Role\RoleAI.cs" />
     <Compile Include="Assets\AI\Role\李逍遥.cs" />
     <Compile Include="Assets\AI\Sword\SwordAI.cs" />
