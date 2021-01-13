@@ -7,9 +7,10 @@ namespace AI.Sword
 
         protected override void BeforPlan()
         {
-            SetKinematic(true);
             Speed = 20;
             RotateSpeed = 360;
+            ColdTime = 5;
+            SetKinematic(true);
         }
 
         protected override void Plan()

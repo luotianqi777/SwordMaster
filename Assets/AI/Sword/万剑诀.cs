@@ -11,6 +11,7 @@ namespace AI.Sword
 
         protected override void BeforPlan()
         {
+            ColdTime = 2;
             count = 50;
             rangeSize = 5;
             Speed = 20;

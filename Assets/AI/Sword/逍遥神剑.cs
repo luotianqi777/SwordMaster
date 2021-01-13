@@ -15,6 +15,7 @@ namespace AI.Sword
             range = 100;
             RotateSpeed = 360 * 10;
             Speed = 20;
+            ColdTime = 3;
             SetKinematic(true);
         }
 

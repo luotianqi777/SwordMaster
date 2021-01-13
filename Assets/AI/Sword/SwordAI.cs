@@ -7,7 +7,7 @@ namespace AI.Sword
     public abstract class SwordAI : BaseAIManager
     {
         // 冷却时间
-        public readonly float coldTime = 3;
+        public float ColdTime = 3;
         // 攻击目标
         protected Transform target;
         // 攻击目标位置

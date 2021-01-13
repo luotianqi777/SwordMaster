@@ -69,7 +69,7 @@ namespace AI.Role
             sword.gameObject.AddComponent<T>();
             T action = sword.GetComponent<T>();
             action.SetTarget(target);
-            AddAction(action.coldTime, () => { });
+            AddAction(action.ColdTime, () => { });
             return sword;
         }
     }
