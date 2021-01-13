@@ -10,6 +10,7 @@ namespace AI.Role
             Transform target = GetNearRole();
             if (target)
             {
+                Move.RotateToTarget(target);
                 Attack(target);
                 float distance = Vector3.Distance(target.position, transform.position);
                 if (distance > Move.Speed * 10)
@@ -24,7 +25,6 @@ namespace AI.Role
                 {
                     Move.AddAction(0.2f, Move.Idle);
                 }
-                Move.RotateToTarget(target);
             }
             else
             {

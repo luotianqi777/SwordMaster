@@ -151,7 +151,7 @@ namespace AI.Sword
         {
             if (isColled || GetKinematic() || gameObject.tag == collision.gameObject.tag) { return; }
             isColled = true;
-            transform.Translate(Vector3.forward * UnityEngine.Random.Range(0, 0.5f), Space.Self);
+            transform.Translate(transform.forward * UnityEngine.Random.Range(0, 0.2f));
             if (collision.gameObject.tag != "Group")
             {
                 transform.SetParent(collision.transform, true);

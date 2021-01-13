@@ -32,7 +32,7 @@ namespace AI.Sword
 
         public void Attack(SwordAI sword)
         {
-            sword.AddAction(2, () =>
+            sword.AddAction(1, () =>
             {
                 sword.Rotate(Vector3.up);
                 sword.Rotate(AttackTarget, Vector3.up);
@@ -42,7 +42,7 @@ namespace AI.Sword
                 sword.SetKinematic(false);
                 sword.LookAttack(AttackTarget);
             });
-            sword.AddAction(Random.Range(0, 1f), () => { });
+            sword.AddAction(Random.Range(0, 2f), () => { });
             sword.AddAction(3, () => sword.Move(sword.transform.forward));
         }
     }
