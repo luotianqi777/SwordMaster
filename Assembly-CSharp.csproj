@@ -66,10 +66,12 @@
     <Compile Include="Assets\AI\AIManager\BaseAIManager.cs" />
     <Compile Include="Assets\AI\Role\MoveAI.cs" />
     <Compile Include="Assets\AI\Role\RoleAI.cs" />
+    <Compile Include="Assets\AI\Role\慕容紫英.cs" />
     <Compile Include="Assets\AI\Role\李逍遥.cs" />
     <Compile Include="Assets\AI\Sword\SwordAI.cs" />
     <Compile Include="Assets\AI\Sword\万剑诀.cs" />
     <Compile Include="Assets\AI\Sword\千方残光剑.cs" />
+    <Compile Include="Assets\AI\Sword\御剑术.cs" />
     <Compile Include="Assets\AI\Sword\逍遥神剑.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.12f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>

@@ -9,7 +9,7 @@ namespace AI.Sword
         // 攻击目标
         protected Transform target;
         // 攻击目标位置
-        protected Vector3 AttackTarget { get=> target? target.position + Vector3.up:transform.forward * 5 + transform.position; }
+        protected Vector3 AttackTarget { get=> target? target.position + Vector3.up*0.8f:transform.forward * 5 + transform.position; }
         // 速度(m/s)
         public float Speed = 10;
         // 转动速度(°/s)
@@ -137,10 +137,10 @@ namespace AI.Sword
         }
 
         // 销毁任务
-        private void DestroyAction()
+        public void DestroyAction(int time = 10)
         {
             // 等待一段时间后销毁
-            AddAction(10, ()=> { });
+            AddAction(time, ()=> { });
             AddAction(0, () => { Destroy(gameObject); });
         }
 

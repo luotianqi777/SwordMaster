@@ -19,28 +19,10 @@ namespace AI.Role
         protected override void AfterPlan() { AddAction(0, () => { Plan(); AfterPlan(); }); }
         protected override void Plan()
         {
-            Transform target = GetNearRole();
+            Transform target = Move.GetNearRole();
             if (target)
             {
-                Move.RotateToTarget(target);
-                Attack(target);
-                float distance = Vector3.Distance(target.position, transform.position);
-                if (distance > Move.Speed * 10)
-                {
-                    Move.AddAction(0.5f, Move.MoveForword);
-                }
-                else if (distance < Move.Speed * 5)
-                {
-                    Move.AddAction(0.5f, Move.MoveBack);
-                }
-                else
-                {
-                    Move.AddAction(0.2f, Move.Idle);
-                }
-            }
-            else
-            {
-                Move.MoveRandom();
+                AddAction(0, () => Attack(target));
             }
         }
         // 添加技能组
@@ -54,38 +36,6 @@ namespace AI.Role
         private void Attack(Transform target)
         {
             swordList[UnityEngine.Random.Range(0, swordList.Count)].Invoke(target);
-        }
-        /// <summary>
-        /// 获取距离自身最近的目标
-        /// </summary>
-        /// <param name="self">自身的GameObject</param>
-        /// <returns>目标的GameObject</returns>
-        protected Transform GetNearRole()
-        {
-            Transform target = null;
-            float nowDistance;
-            float newDistance;
-            foreach (GameObject role in GameObject.FindGameObjectsWithTag("Role"))
-            {
-                if (role == gameObject) { continue; }
-                if (target == null) { target = role.transform; continue; }
-                nowDistance = Vector3.Distance(transform.position, target.transform.position);
-                newDistance = Vector3.Distance(transform.position, role.transform.position);
-                if (nowDistance > newDistance) { target = role.transform; }
-            }
-            return target;
-        }
-
-        /// <summary>
-        /// 获取距离自身最近的目标的最佳攻击Position
-        /// </summary>
-        /// <param name="role">目标</param>
-        /// <returns>目标的位置</returns>
-        protected Vector3 GetRoleAttackPostion(Transform role = null)
-        {
-            role = role ? role : GetNearRole();
-            if (role) { return role.position + Vector3.up; }
-            else { return transform.position + Vector3.up + transform.forward * 10; }
         }
 
         /// <summary>

@@ -26,11 +26,55 @@ namespace AI.Role
             }
         }
 
-        protected override void AfterPlan() { }
+        protected override void AfterPlan() {}
 
         protected override void BeforPlan() { }
 
-        protected override void Plan() { }
+        protected override void Plan() { 
+            Transform target = GetNearRole();
+            if (target)
+            {
+                RotateToTarget(target);
+                float distance = Vector3.Distance(target.position, transform.position);
+                if (distance > Speed * 10)
+                {
+                    AddAction(0.5f, MoveForword);
+                }
+                else if (distance < Speed * 5)
+                {
+                    AddAction(0.5f, MoveBack);
+                }
+                else
+                {
+                    AddAction(1, Idle);
+                }
+            }
+            else
+            {
+                MoveRandom();
+            }
+        }
+
+        /// <summary>
+        /// 获取距离自身最近的目标
+        /// </summary>
+        /// <param name="self">自身的GameObject</param>
+        /// <returns>目标的GameObject</returns>
+        public Transform GetNearRole()
+        {
+            Transform target = null;
+            float nowDistance;
+            float newDistance;
+            foreach (GameObject role in GameObject.FindGameObjectsWithTag("Role"))
+            {
+                if (role == gameObject) { continue; }
+                if (target == null) { target = role.transform; continue; }
+                nowDistance = Vector3.Distance(transform.position, target.transform.position);
+                newDistance = Vector3.Distance(transform.position, role.transform.position);
+                if (nowDistance > newDistance) { target = role.transform; }
+            }
+            return target;
+        }
 
         /// <summary>
         /// 播放动画
