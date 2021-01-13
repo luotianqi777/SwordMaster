@@ -1,0 +1,48 @@
+﻿using UnityEngine;
+
+namespace AI.Sword
+{
+    class 无名剑法 : SwordAction
+    {
+
+        protected override void BeforPlan()
+        {
+            SetKinematic(true);
+            Speed = 20;
+            RotateSpeed = 360;
+        }
+
+        protected override void Plan()
+        {
+            Vector3 vector = target + Vector3.up * 3 - transform.position;
+            float time = vector.magnitude / Speed;
+            AddAction(time, () =>
+            {
+                Rotate(Vector3.up);
+                Move(vector);
+                Split(0.05f, Attack);
+            });
+            AddAction(0, () => {
+                SetKinematic(false);
+                LookAttack(target);
+                });
+            AddAction(1, () => Move(transform.forward));
+        }
+
+        public void Attack(SwordAction sword)
+        {
+            sword.AddAction(2, () =>
+            {
+                sword.Rotate(Vector3.up);
+                sword.Rotate(target, Vector3.up);
+            });
+            sword.AddAction(0, () =>
+            {
+                sword.SetKinematic(false);
+                sword.LookAttack(target);
+            });
+            sword.AddAction(Random.Range(0, 1f), () => { });
+            sword.AddAction(3, () => sword.Move(sword.transform.forward));
+        }
+    }
+}

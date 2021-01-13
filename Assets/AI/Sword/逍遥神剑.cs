@@ -1,0 +1,81 @@
+﻿using UnityEngine;
+
+namespace AI.Sword
+{
+    class 逍遥神剑 : SwordAction
+    {
+        // 分裂数
+        public int count;
+        // 角度范围
+        public float range;
+
+        protected override void BeforPlan()
+        {
+            count = 10;
+            range = 100;
+            RotateSpeed = 360 * 10;
+            Speed = 20;
+            SetKinematic(true);
+        }
+
+        protected override void Plan()
+        {
+            Vector3 vector = target - transform.position;
+            float time = vector.magnitude / Speed;
+            AddAction(0, () => LookAttack(target));
+            // 渐进放大
+            AddAction(0.5f, () => AddScale(Vector3.one * 2));
+            // 前进
+            AddAction(time, () => Move(vector));
+            // 复原
+            AddAction(0, () => SetScale(Vector3.one));
+            // 分裂
+            AddAction(0, () =>
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    Split(0, (sword) =>
+                    {
+                        // 调整角度
+                        sword.transform.Rotate(new Vector3(0, i * (range / count) - range / 2, 0));
+                        SubAction(sword);
+                    });
+                }
+            });
+            // 瞄准
+            AddAction(0, () =>
+            {
+                SetScale(Vector3.one * 2);
+                SetKinematic(false);
+            });
+            // 继续前进
+            AddAction(time, () => Move(transform.forward, Speed));
+            // 销毁
+            AddAction(0, () => Destroy(gameObject));
+        }
+
+        private void SubAction(SwordAction sword)
+        {
+            float time = 1;
+            Vector3 vector = sword.transform.forward;
+            // 边转边退
+            sword.AddAction(time, () =>
+            {
+                sword.Rotate(Vector3.up);
+                sword.Move(-vector,sword.Speed/2);
+            });
+            // 瞄准
+            sword.AddAction(0, () =>
+            {
+                sword.LookAttack(target);
+                sword.SetKinematic(false);
+            });
+            // 前进
+            sword.AddAction(time, () =>
+            {
+                sword.Move(vector, sword.Speed * 2);
+            });
+        }
+
+    }
+}
