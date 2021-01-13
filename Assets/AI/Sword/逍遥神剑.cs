@@ -28,12 +28,8 @@ namespace AI.Sword
             Vector3 vector = AttackTarget - transform.position;
             float time = vector.magnitude / Speed;
             AddAction(0, () => LookAttack(AttackTarget));
-            // 渐进放大
-            AddAction(0.5f, () => AddScale(Vector3.one * 2));
             // 前进
             AddAction(time, () => Move(vector));
-            // 复原
-            AddAction(0, () => SetScale(Vector3.one));
             // 分裂
             AddAction(0, () =>
             {
@@ -47,16 +43,11 @@ namespace AI.Sword
                     });
                 }
             });
-            // 瞄准
-            AddAction(0, () =>
-            {
-                SetScale(Vector3.one * 2);
-                SetKinematic(false);
-            });
+            AddAction(0, () => { SetKinematic(false); });
             // 继续前进
             AddAction(time, () => Move(transform.forward, Speed));
             // 销毁
-            AddAction(0, () => Destroy(gameObject));
+            DestroyAction();
         }
 
         private void SubAction(SwordAI sword)

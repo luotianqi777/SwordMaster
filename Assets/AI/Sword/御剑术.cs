@@ -27,15 +27,16 @@ namespace AI.Sword
 
         protected override void Plan()
         {
+            AddAction(0.5f, () => { });
             AddAction(0, () =>
             {
                 // 移动到目标上方随机位置
                 transform.position = AttackTarget + (target.up + Random.Range(-1, 1) * target.right + Random.Range(-1, 1) * target.forward) * distance;
-                // 瞄准目标
-                LookAttack(AttackTarget);
             });
             // 旋转一圈
             AddAction(360 / RotateSpeed, () => Rotate(Vector3.up));
+            // 瞄准目标
+            AddAction(0, () => LookAttack(AttackTarget));
             // 分裂几个发射
             AddAction(time, () =>
             {
