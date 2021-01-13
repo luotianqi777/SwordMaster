@@ -2,7 +2,7 @@
 
 namespace AI.Sword
 {
-    class 万剑诀 : SwordAction
+    class 万剑诀 : SwordAI
     {
         // 分裂书
         public int count;

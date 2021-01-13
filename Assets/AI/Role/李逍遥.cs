@@ -2,7 +2,7 @@
 
 namespace AI.Role
 {
-    class 李逍遥 : RoleAction
+    class 李逍遥 : RoleAI
     {
 
         protected override void BeforPlan()

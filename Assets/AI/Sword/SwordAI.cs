@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System;
-using AI.ActionManager;
+using AI.AIManager;
 
 namespace AI.Sword
 {
-    public abstract class SwordAction : BaseActionManager
+    public abstract class SwordAI : BaseAIManager
     {
         // 冷却时间
         public readonly float coldTime = 3;
@@ -37,12 +37,12 @@ namespace AI.Sword
         /// </summary>
         /// <param name="time">分裂间隔</param>
         /// <param name="action">新对象的行为</param>
-        public void Split(float time,Action<SwordAction> action)
+        public void Split(float time,Action<SwordAI> action)
         {
             if (timeout - lastSplitTime >= time)
             {
                 GameObject newObject = Instantiate(gameObject);
-                SwordAction sword = newObject.GetComponent<SwordAction>();
+                SwordAI sword = newObject.GetComponent<SwordAI>();
                 action.Invoke(sword);
                 // 计划任务：清空所有计划后添加销毁任务
                 // 清空是因为在执行action后还有克隆对象本身的Init任务

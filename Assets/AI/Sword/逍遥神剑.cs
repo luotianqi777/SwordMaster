@@ -2,7 +2,7 @@
 
 namespace AI.Sword
 {
-    class 逍遥神剑 : SwordAction
+    class 逍遥神剑 : SwordAI
     {
         // 分裂数
         public int count;
@@ -54,7 +54,7 @@ namespace AI.Sword
             AddAction(0, () => Destroy(gameObject));
         }
 
-        private void SubAction(SwordAction sword)
+        private void SubAction(SwordAI sword)
         {
             float time = 1;
             Vector3 vector = sword.transform.forward;

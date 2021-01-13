@@ -2,7 +2,7 @@
 
 namespace AI.Sword
 {
-    class 无名剑法 : SwordAction
+    class 无名剑法 : SwordAI
     {
 
         protected override void BeforPlan()
@@ -29,7 +29,7 @@ namespace AI.Sword
             AddAction(1, () => Move(transform.forward));
         }
 
-        public void Attack(SwordAction sword)
+        public void Attack(SwordAI sword)
         {
             sword.AddAction(2, () =>
             {

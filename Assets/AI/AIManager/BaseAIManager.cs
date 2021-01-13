@@ -3,9 +3,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace AI.ActionManager
+namespace AI.AIManager
 {
-    public abstract class BaseActionManager : MonoBehaviour
+    public abstract class BaseAIManager : MonoBehaviour
     {
         // 行为
         private class Actions{

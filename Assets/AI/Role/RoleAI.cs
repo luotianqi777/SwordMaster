@@ -1,9 +1,9 @@
-﻿using AI.ActionManager;
+﻿using AI.AIManager;
 using UnityEngine;
 
 namespace AI.Role
 {
-    public abstract class RoleAction : BaseActionManager
+    public abstract class RoleAI : BaseAIManager
     {
         // 速度(m/s)
         public float Speed = 2;
@@ -81,7 +81,7 @@ namespace AI.Role
         /// <typeparam name="T">行为</typeparam>
         /// <typeparam name="target">目标</typeparam>
         /// <returns>剑的位置</returns>
-        protected Transform GetSword<T>(Transform target) where T : Sword.SwordAction
+        protected Transform GetSword<T>(Transform target) where T : Sword.SwordAI
         {
             Transform sword = GetSword();
             sword.gameObject.AddComponent<T>();
