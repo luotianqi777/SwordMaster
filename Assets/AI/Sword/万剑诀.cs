@@ -20,7 +20,7 @@ namespace AI.Sword
         {
             count = 200;
             rangeSize = 5;
-            Speed = 30;
+            Speed = 20;
             high = 30;
             SetKinematic(true);
         }
@@ -45,7 +45,11 @@ namespace AI.Sword
                 {
                     Split(0, (sword) =>
                     {
-                        Vector3 range = Random.Range(-rangeSize, rangeSize) * Vector3.right + Random.Range(-rangeSize, rangeSize) * Vector3.forward;
+                        float value1 = Random.Range(-1, 1f);
+                        float value2 = Mathf.Sqrt(1 - value1 * value1);
+                        value2 = Random.Range(-value2, value2);
+                        Vector3 range = value2 * Vector3.forward + value1 * Vector3.right;
+                        range *= rangeSize;
                         sword.transform.position += range;
                         // 随机等待一段时间后发射
                         sword.AddAction(Random.Range(0, 2f), () => { });
