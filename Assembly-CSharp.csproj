@@ -75,6 +75,7 @@
     <Compile Include="Assets\AI\Sword\千方残光剑.cs" />
     <Compile Include="Assets\AI\Sword\御剑术.cs" />
     <Compile Include="Assets\AI\Sword\逍遥神剑.cs" />
+    <Compile Include="Assets\Game\GameManager.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.12f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

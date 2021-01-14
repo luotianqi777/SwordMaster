@@ -35,12 +35,14 @@ namespace AI.Role
             if (target)
             {
                 float distance = Vector3.Distance(target.position, transform.position);
-                if (distance > Speed * 10)
+                if (distance > Speed * 7)
                 {
+                    RotateToTarget(target);
                     AddAction(0.5f, MoveForword);
                 }
-                else if (distance < Speed * 5)
+                else if (distance < Speed * 4)
                 {
+                    RotateToTarget(target);
                     AddAction(0.5f, MoveBack);
                 }
                 else

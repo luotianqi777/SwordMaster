@@ -9,7 +9,7 @@ namespace AI.Sword
         public float waitTime;
         protected override void BeforPlan()
         {
-            count = 1000;
+            count = 500;
             high = 20;
             Speed = 20;
             waitTime = count / Speed /5;
