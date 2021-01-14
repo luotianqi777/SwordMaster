@@ -11,8 +11,8 @@ namespace AI.Sword
         {
             count = 1000;
             high = 20;
-            waitTime = 10;
             Speed = 20;
+            waitTime = count / 10 / Speed;
             RotateSpeed = 360;
             SetKinematic(true);
         }

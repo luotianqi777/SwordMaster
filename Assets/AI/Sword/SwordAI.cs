@@ -17,9 +17,9 @@ namespace AI.Sword
         // 最后一次分裂的时间
         private float lastSplitTime = 0;
         // 剑柄坐标
-        public Vector3 HeadLocation { get => transform.position - transform.forward * 0.75f; }
+        public Vector3 HeadLocation { get => transform.position - transform.forward * 0.75f * transform.localScale.z; }
         // 剑尾坐标
-        public Vector3 TailLocation { get => transform.position + transform.forward * 0.75f; }
+        public Vector3 TailLocation { get => transform.position + transform.forward * 0.75f * transform.localScale.z; }
         // 冷却时间
         public abstract float GetColdTime();
         /// <summary>
@@ -127,6 +127,9 @@ namespace AI.Sword
             transform.localScale += scale*Time.deltaTime;
         }
 
+        // 碰撞后的计划
+        protected virtual void AfterColledPlan() { }
+
         /// <summary>
         /// 设置倍率
         /// </summary>
@@ -144,18 +147,25 @@ namespace AI.Sword
             AddAction(0, () => { Destroy(gameObject); });
         }
 
+        // 是否已经发生了碰撞
         private bool isColled = false;
+        // 是否修正
+        public bool isAttackedFix = true;
         // 碰撞
         private void OnCollisionEnter(Collision collision)
         {
             if (isColled || GetKinematic() || gameObject.tag == collision.gameObject.tag) { return; }
             isColled = true;
-            transform.Translate(transform.forward * UnityEngine.Random.Range(0, 0.2f));
+            if (isAttackedFix)
+            {
+                Move(transform.forward * UnityEngine.Random.Range(0.2f, 0.5f) * transform.localScale.z);
+            }
             if (collision.gameObject.tag != "Group")
             {
                 transform.SetParent(collision.transform, true);
             }
             ClearAllAction();
+            AfterColledPlan();
             // 额外等待一段时间
             DestroyAction();
         }
