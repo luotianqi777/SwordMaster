@@ -42,7 +42,7 @@ namespace AI.Sword
             sword.isAttackedFix = false;
             sword.SetKinematic(true);
             sword.SetScale(Vector3.one);
-            sword.AddAction(0, () Vector3.Distance(Vector3.u,transform.position) => sword.transform.position = local);
+            sword.AddAction(0, () => sword.transform.position = local);
             sword.AddAction(0.5f, () => sword.AddScale(Vector3.one * scale));
             sword.AddAction(0, () => sword.SetKinematic(false));
             bool rotateLeft = Vector3.Dot(transform.right, local - sword.transform.position) > 0;
