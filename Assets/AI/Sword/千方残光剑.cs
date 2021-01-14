@@ -19,13 +19,13 @@ namespace AI.Sword
 
         protected override void Plan()
         {
-            Vector3 vector = AttackTarget - transform.position + Vector3.up * high ;
-            float time = (vector.magnitude - high) / Speed;
+            Vector3 vector = AttackTarget - transform.position;
+            float time = (vector.magnitude - high/3) / Speed;
             AddAction(high / Speed, () => Move(Vector3.up));
             AddAction(time, () =>
-            {
-                Move(vector);
-            });
+              {
+                  Move(vector);
+              });
             AddAction(waitTime, () => { 
                 Split(waitTime/count, Attack);
             });
@@ -33,7 +33,7 @@ namespace AI.Sword
                 SetKinematic(false);
                 LookAttack(AttackTarget);
                 });
-            AddAction(1, () => Move(transform.forward));
+            AddAction(Vector3.Distance(transform.position, AttackTarget) / Speed, () => Move(transform.forward));
         }
 
         private void Attack(SwordAI sword)
@@ -56,7 +56,7 @@ namespace AI.Sword
         private void SubAttack(SwordAI sword)
         {
             Vector3 center = AttackTarget + Vector3.up * high;
-            sword.Move(center - sword.transform.position, high/2/waitTime);
+            sword.Move(sword.transform.position - center , high/2/waitTime);
             // 修正水平位置
             Vector3 fix = sword.transform.position;
             fix.y = center.y;
