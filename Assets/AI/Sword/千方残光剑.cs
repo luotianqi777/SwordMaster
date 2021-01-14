@@ -12,7 +12,7 @@ namespace AI.Sword
             count = 1000;
             high = 20;
             Speed = 20;
-            waitTime = count / 10 / Speed;
+            waitTime = GetColdTime() - 5;
             RotateSpeed = 360;
             SetKinematic(true);
         }
@@ -70,7 +70,7 @@ namespace AI.Sword
 
         public override float GetColdTime()
         {
-            return 25;
+            return count / Speed / 2;
         }
     }
 }
